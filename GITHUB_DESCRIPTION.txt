@@ -1,0 +1,11 @@
+REPOSITORY NAME:
+penguin_classification
+
+ABOUT / DESCRIPTION (paste in the "About" box, top right of the repo page):
+Classifying penguin species (Adelie, Chinstrap, Gentoo) from body measurements using KNN and Decision Tree models, with EDA, evaluation, and cross-validation.
+
+TOPICS (add under the About gear icon):
+machine-learning, classification, knn, decision-tree, scikit-learn, data-science, python, jupyter-notebook, palmer-penguins, eda
+
+COMMIT MESSAGE (first commit):
+Initial commit: penguin species classification project
