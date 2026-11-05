@@ -1,8 +1,7 @@
 # Penguin Species Classification
 
-Can you tell what kind of penguin you are looking at just by measuring its beak, flipper and weight? That was the question behind this project. I took the Palmer Penguins dataset and built two machine learning models, K-Nearest Neighbors (KNN) and a Decision Tree, to predict whether a penguin is an Adelie, a Chinstrap or a Gentoo.
+Can you tell what kind of penguin you are looking at just by measuring its beak, flipper and weight? That was the question behind this project. We took the Palmer Penguins dataset and built two machine learning models, K-Nearest Neighbors (KNN) and a Decision Tree, to predict whether a penguin is an Adelie, a Chinstrap or a Gentoo.
 
-This README walks through everything I did, in the order I did it, including the decisions I made along the way and why I made them.
 
 ---
 
@@ -125,7 +124,7 @@ The dataset has 344 rows and 17 columns.
 
 ### Step 2: Understand the dataset
 
-Before touching any model, I wanted to know what I was working with. I checked:
+
 
 - **Shape and data types.** 344 rows, 17 columns, a mix of text and numbers.
 - **Missing values.** Only a handful of rows were missing measurements, which is manageable.
@@ -135,7 +134,6 @@ Before touching any model, I wanted to know what I was working with. I checked:
 
 ### Step 3: Exploratory data analysis (EDA)
 
-I made four kinds of visualizations to see whether the species could realistically be told apart.
 
 1. **Species count plot.** Shows the class imbalance at a glance.
 2. **Feature histograms by species.** One plot per feature, with a density curve for each species. This is where it becomes clear that the species overlap in some measurements but separate nicely in others. Gentoo penguins, for instance, tend to be heavier with longer flippers.
@@ -144,7 +142,7 @@ I made four kinds of visualizations to see whether the species could realistical
 
 ### Step 4: Preprocessing
 
-This is where I prepared the data for modeling.
+
 
 1. **Chose features and target.** The four numeric measurements became `X`, and Species became `y`.
 2. **Removed rows with a missing target.** A row with no species label cannot teach or test a classifier. (In this dataset every row had a species, so no rows were lost, but the check keeps the code safe for other data.)
@@ -157,11 +155,11 @@ This is where I prepared the data for modeling.
 | Gentoo | 99 | 25 |
 | Chinstrap | 54 | 14 |
 
-I deliberately did not fill in missing values before splitting. Imputing on the whole dataset first would let information from the test set leak into training. Instead, imputation lives inside each model pipeline (next step), so it only ever learns from training data.
+
 
 ### Step 5: Model building and training
 
-I built two models, each wrapped in a scikit-learn `Pipeline` so that preprocessing and prediction always happen together.
+ built two models, each wrapped in a scikit-learn `Pipeline` so that preprocessing and prediction always happen together.
 
 **Model 1: K-Nearest Neighbors**
 
@@ -174,27 +172,27 @@ I built two models, each wrapped in a scikit-learn `Pipeline` so that preprocess
 1. Fill missing values with the **median**.
 2. Train a `DecisionTreeClassifier` (`random_state=42`).
 
-I skipped scaling for the tree because trees split on thresholds and do not care about feature scale.
+ skipped scaling for the tree because trees split on thresholds and do not care about feature scale.
 
 ### Step 6: Model evaluation
 
-I tested both models on the 69 rows they had never seen. For each one I calculated accuracy, weighted precision, weighted recall and weighted F1-score, and printed a full per-species classification report. I used weighted averages so that the larger classes count proportionally more, which suits an imbalanced dataset.
+tested both models on the 69 rows they had never seen. For each one calculated accuracy, weighted precision, weighted recall and weighted F1-score, and printed a full per-species classification report. used weighted averages so that the larger classes count proportionally more, which suits an imbalanced dataset.
 
 ### Step 7: Comparing the models
 
-I put both sets of scores into a single table and drew a bar chart so the difference was easy to see. The notebook then picks the best model automatically using the highest weighted F1-score.
+Put both sets of scores into a single table and drew a bar chart so the difference was easy to see. The notebook then picks the best model automatically using the highest weighted F1-score.
 
 ### Step 8: Confusion matrices and the decision tree
 
-Accuracy alone does not tell you where a model goes wrong, so I plotted confusion matrices for both models side by side. They show exactly which species get mixed up with which.
+Accuracy alone does not tell you where a model goes wrong, so plotted confusion matrices for both models side by side. They show exactly which species get mixed up with which.
 
-I also plotted the trained Decision Tree itself. This is one of the nicest things about trees: you can read the actual rules the model learned, such as which measurement it checks first and what threshold it uses.
+also plotted the trained Decision Tree itself. This is one of the nicest things about trees: you can read the actual rules the model learned, such as which measurement it checks first and what threshold it uses.
 
 ### Step 9: Cross-validation and final comparison
 
-A single train-test split can be lucky or unlucky, especially with only 69 test rows. To get a steadier estimate I ran **5-fold cross-validation** on the full dataset for both models. Because imputation and scaling sit inside the pipelines, they are re-fitted inside every fold, so there is no leakage.
+A single train-test split can be lucky or unlucky, especially with only 69 test rows. To get a steadier estimate ran **5-fold cross-validation** on the full dataset for both models. Because imputation and scaling sit inside the pipelines, they are re-fitted inside every fold, so there is no leakage.
 
-Finally, I merged the test-set metrics and the cross-validation results into one final table and printed the conclusion.
+Finally, merged the test-set metrics and the cross-validation results into one final table and printed the conclusion.
 
 ---
 
@@ -223,7 +221,7 @@ Finally, I merged the test-set metrics and the cross-validation results into one
 
 ---
 
-## What I learned
+## What We learned
 
 - **Measurements really do separate these species.** Even with only four numeric features, both models classify penguins very accurately.
 - **Scaling matters for KNN.** Features measured in grams and features measured in millimetres cannot be compared fairly without standardizing them first.
@@ -237,8 +235,8 @@ Finally, I merged the test-set metrics and the cross-validation results into one
 
 - **Small test set.** With only 69 test samples, a perfect score is encouraging but not proof that the model will be flawless on new data.
 - **Small dataset overall.** 344 penguins is enough for a learning project, but not for strong claims about generalization.
-- **Default settings.** I used k = 5 for KNN and the default tree settings. I did not tune hyperparameters.
-- **Features only.** I used four numeric measurements. Island, sex and the isotope readings were left out.
+- **Default settings.** used k = 5 for KNN and the default tree settings. did not tune hyperparameters.
+- **Features only.** used four numeric measurements. Island, sex and the isotope readings were left out.
 - **Possible overfitting in the tree.** The tree is unpruned, which likely explains its higher variance across folds.
 
 ---
@@ -327,6 +325,7 @@ The data were collected and made available by Dr. Kristen Gorman and the Palmer 
 
 **ashk-k10**
 GitHub: [@ashk-k10](https://github.com/ashk-k10)
+GitHub: [@
 
 If you have feedback or ideas for improving this project, feel free to open an issue or reach out.
 
