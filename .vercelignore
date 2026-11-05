@@ -1,0 +1,6 @@
+*.ipynb
+.ipynb_checkpoints/
+images/
+requirements-notebook.txt
+GITHUB_DESCRIPTION.txt
+README.md

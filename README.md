@@ -18,10 +18,11 @@ This README walks through everything I did, in the order I did it, including the
 8. [Ideas for future work](#ideas-for-future-work)
 9. [Project structure](#project-structure)
 10. [How to run this project](#how-to-run-this-project)
-11. [Tech stack](#tech-stack)
-12. [Acknowledgements](#acknowledgements)
-13. [Author](#author)
-14. [License](#license)
+11. [Live web app](#live-web-app)
+12. [Tech stack](#tech-stack)
+13. [Acknowledgements](#acknowledgements)
+14. [Author](#author)
+15. [License](#license)
 
 ---
 
@@ -260,7 +261,10 @@ penguin_classification/
 ├── data/
 │   └── penguins_lter.csv           # Raw dataset
 ├── Penguin_Classification.ipynb    # Full analysis and modeling notebook
-├── requirements.txt                # Python dependencies
+├── app.py                          # Flask web app (deployed on Vercel)
+├── requirements.txt                # Lean dependencies for the web app / Vercel
+├── requirements-notebook.txt       # Extra dependencies for the notebook
+├── .vercelignore                   # Files Vercel should not upload
 ├── .gitignore                      # Files Git should ignore
 ├── LICENSE                         # MIT License
 └── README.md                       # You are here
@@ -292,7 +296,7 @@ venv\Scripts\activate
 **3. Install the dependencies**
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements-notebook.txt
 ```
 
 **4. Launch Jupyter Notebook**
@@ -307,6 +311,33 @@ Open `Penguin_Classification.ipynb` and choose **Kernel > Restart & Run All**. M
 
 ---
 
+## Live web app
+
+Beyond the notebook, I turned the best model into a small web app. You type in a penguin's culmen length, culmen depth, flipper length and body mass, and it returns the predicted species along with how the 5 nearest neighbours voted.
+
+- **Live demo:** add your Vercel link here once deployed
+- **Backend:** Flask (`app.py`), exposing `GET /`, `GET /api/health` and `POST /api/predict`
+- **Model:** the same pipeline as the notebook (median imputer, standard scaler, KNN with k = 5), trained on the full dataset when the app starts
+
+Example request:
+
+```bash
+curl -X POST https://YOUR-APP.vercel.app/api/predict \
+  -H "Content-Type: application/json" \
+  -d '{"culmen_length": 47.5, "culmen_depth": 15.0, "flipper_length": 217, "body_mass": 5000}'
+```
+
+Run the web app locally:
+
+```bash
+pip install -r requirements.txt
+python app.py
+```
+
+Then open http://127.0.0.1:5000 in your browser.
+
+---
+
 ## Tech stack
 
 - Python 3.10+
@@ -314,6 +345,7 @@ Open `Penguin_Classification.ipynb` and choose **Kernel > Restart & Run All**. M
 - Matplotlib and Seaborn for visualization
 - scikit-learn for modeling, pipelines and evaluation
 - Jupyter Notebook for the interactive workflow
+- Flask for the web app, deployed on Vercel
 
 ---
 
