@@ -325,7 +325,8 @@ The data were collected and made available by Dr. Kristen Gorman and the Palmer 
 
 **ashk-k10**
 GitHub: [@ashk-k10](https://github.com/ashk-k10)
-GitHub: [@
+GitHub: [@kiraxach](https://github.com/kiraxach).
+GitHub: [@meher-cyber2719](https://github.com/meher-cyber2719).
 
 If you have feedback or ideas for improving this project, feel free to open an issue or reach out.
 
