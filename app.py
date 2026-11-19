@@ -1,12 +1,4 @@
-"""
-Penguin Species Classifier - web app for deployment on Vercel.
 
-The model is the same one built in Penguin_Classification.ipynb:
-median imputer -> StandardScaler -> KNN (k=5).
-It is trained when the app starts (the dataset is tiny, so this takes
-milliseconds), which avoids shipping a pickled model and any scikit-learn
-version mismatch between training and deployment.
-"""
 import csv
 import os
 
@@ -54,7 +46,6 @@ def load_data():
             labels.append(species.split(" ")[0])  # Adelie / Chinstrap / Gentoo
     return np.array(rows, dtype=float), np.array(labels)
 
-
 def build_model():
     X, y = load_data()
     model = Pipeline([
@@ -65,9 +56,7 @@ def build_model():
     model.fit(X, y)
     return model, len(y)
 
-
 MODEL, N_TRAIN = build_model()
-
 
 PAGE = """<!doctype html>
 <html lang="en">
