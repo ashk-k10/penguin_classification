@@ -12,7 +12,7 @@ Can you tell what kind of penguin you are looking at just by measuring its beak,
 3. [About the dataset](#about-the-dataset)
 4. [Step-by-step walkthrough](#step-by-step-walkthrough)
 5. [Results](#results)
-6. [What I learned](#what-i-learned)
+6. [What We learned](#what-i-learned)
 7. [Limitations and honest caveats](#limitations-and-honest-caveats)
 8. [Ideas for future work](#ideas-for-future-work)
 9. [Project structure](#project-structure)
@@ -32,7 +32,7 @@ Can you tell what kind of penguin you are looking at just by measuring its beak,
 | Goal | Predict penguin species from physical measurements |
 | Problem type | Multi-class classification (3 classes) |
 | Dataset | Palmer Penguins (`data/penguins_lter.csv`), 344 records, 17 columns |
-| Input features | Culmen Length, Culmen Depth, Flipper Length, Body Mass |
+| Input features | Culmen(bill) Length, Culmen(bill) Depth, Flipper Length, Body Mass |
 | Target | Species (Adelie, Chinstrap, Gentoo) |
 | Models | K-Nearest Neighbors (k = 5) and Decision Tree |
 | Best model | KNN, with 100% test accuracy and 98.55% cross-validated accuracy |
@@ -61,7 +61,7 @@ flowchart TD
     L --> M[Final comparison table<br/>and conclusion]
 ```
 
-If the diagram does not render in your viewer, here is the same flow in plain text:
+If the diagram does not render from viewers viewpoint , here is the same flow in plain text:
 
 ```
 Raw CSV
@@ -97,8 +97,8 @@ The data comes from the Palmer Station Long Term Ecological Research (LTER) prog
 
 | Feature | What it measures |
 |---------|------------------|
-| Culmen Length (mm) | Length of the upper ridge of the bill |
-| Culmen Depth (mm) | How deep the bill is, top to bottom |
+| Culmen(bill) Length (mm) | Length of the upper ridge of the bill |
+| Culmen(bill) Depth (mm) | How deep the bill is, top to bottom |
 | Flipper Length (mm) | Length of the flipper |
 | Body Mass (g) | Weight of the penguin |
 
@@ -106,7 +106,7 @@ The data comes from the Palmer Station Long Term Ecological Research (LTER) prog
 
 | Column | Missing entries |
 |--------|-----------------|
-| Culmen Length, Culmen Depth, Flipper Length, Body Mass | 2 each |
+| Culmen(bill) Length, Culmen(bill) Depth, Flipper Length, Body Mass | 2 each |
 | Sex | 10 |
 | Delta 15 N and Delta 13 C (isotope readings) | 14 and 13 |
 | Comments | 318 |
@@ -124,9 +124,6 @@ I started by importing the tools I needed: pandas and NumPy for data handling, M
 The dataset has 344 rows and 17 columns.
 
 ### Step 2: Understand the dataset
-
-
-
 - **Shape and data types.** 344 rows, 17 columns, a mix of text and numbers.
 - **Missing values.** Only a handful of rows were missing measurements, which is manageable.
 - **Statistical summary.** For example, body mass ranges from 2,700 g to 6,300 g, and flipper length from 172 mm to 231 mm. The fact that the features sit on very different scales mattered later, when I chose to scale the data for KNN.
@@ -134,16 +131,12 @@ The dataset has 344 rows and 17 columns.
 - **Class balance.** Adelie is the largest group and Chinstrap the smallest, so the classes are somewhat imbalanced. That influenced how I split the data.
 
 ### Step 3: Exploratory data analysis (EDA)
-
-
 1. **Species count plot.** Shows the class imbalance at a glance.
 2. **Feature histograms by species.** One plot per feature, with a density curve for each species. This is where it becomes clear that the species overlap in some measurements but separate nicely in others. Gentoo penguins, for instance, tend to be heavier with longer flippers.
 3. **Pair plot.** Every feature plotted against every other feature, coloured by species. The clusters in this plot were the first real hint that a simple model could do well.
 4. **Correlation heatmap.** Shows how strongly the four features move together. Flipper length and body mass, for example, are strongly related.
 
 ### Step 4: Preprocessing
-
-
 
 1. **Chose features and target.** The four numeric measurements became `X`, and Species became `y`.
 2. **Removed rows with a missing target.** A row with no species label cannot teach or test a classifier. (In this dataset every row had a species, so no rows were lost, but the check keeps the code safe for other data.)
@@ -155,8 +148,6 @@ The dataset has 344 rows and 17 columns.
 | Adelie | 122 | 30 |
 | Gentoo | 99 | 25 |
 | Chinstrap | 54 | 14 |
-
-
 
 ### Step 5: Model building and training
 
@@ -311,28 +302,12 @@ Open `Penguin_Classification.ipynb` and choose **Kernel > Restart & Run All**. M
 
 ## Live web app
 
-Beyond the notebook, I turned the best model into a small web app. You type in a penguin's culmen length, culmen depth, flipper length and body mass, and it returns the predicted species along with how the 5 nearest neighbours voted.
+Beyond the notebook, I turned the best model into a small web app. You type in a penguin's culmen(bill) length, culmen(bill) depth, flipper length and body mass, and it returns the predicted species along with how the 5 nearest neighbours voted.
 
-- **Live demo:** add your Vercel link here once deployed
+- **Live demo:** https://penguinclassification-2u0ffz52q-ku2507u0500-3742s-projects.vercel.app/
 - **Backend:** Flask (`app.py`), exposing `GET /`, `GET /api/health` and `POST /api/predict`
-- **Model:** the same pipeline as the notebook (median imputer, standard scaler, KNN with k = 5), trained on the full dataset when the app starts
 
-Example request:
-
-```bash
-curl -X POST https://YOUR-APP.vercel.app/api/predict \
-  -H "Content-Type: application/json" \
-  -d '{"culmen_length": 47.5, "culmen_depth": 15.0, "flipper_length": 217, "body_mass": 5000}'
-```
-
-Run the web app locally:
-
-```bash
-pip install -r requirements.txt
-python app.py
-```
-
-Then open http://127.0.0.1:5000 in your browser.
+Live Link: https://penguinclassification-2u0ffz52q-ku2507u0500-3742s-projects.vercel.app/
 
 ---
 
