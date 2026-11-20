@@ -302,12 +302,12 @@ Open `Penguin_Classification.ipynb` and choose **Kernel > Restart & Run All**. M
 
 ## Live web app
 
-Beyond the notebook, I turned the best model into a small web app. You type in a penguin's culmen(bill) length, culmen(bill) depth, flipper length and body mass, and it returns the predicted species along with how the 5 nearest neighbours voted.
+Beyond the notebook, We turned the best model into a small web app. You type in a penguin's culmen(bill) length, culmen(bill) depth, flipper length and body mass, and it returns the predicted species along with how the 5 nearest neighbours voted.
 
-- **Live demo:** [https://penguinclassification-2u0ffz52q-ku2507u0500-3742s-projects.vercel.app/](https://penguinclassification.vercel.app/)
+- **Live demo:** [https://penguinclassification.vercel.app/]
 - **Backend:** Flask (`app.py`), exposing `GET /`, `GET /api/health` and `POST /api/predict`
 
-Live Link: [https://penguinclassification-2u0ffz52q-ku2507u0500-3742s-projects.vercel.app/](https://penguinclassification.vercel.app/)
+Live Link: [https://penguinclassification.vercel.app/]
 
 ---
 
